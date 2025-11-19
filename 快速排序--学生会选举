@@ -1,0 +1,29 @@
+#include<bits/stdc++.h>
+using namespace std;
+int tickets[2000001];
+void quicksort(int l,int r){
+    if(l>=r) return;
+    int x=tickets[(l+rand()%(r-l+1))];//这里是左端点l不是1！！！
+    int a=l,b=r;
+    int i=a;
+    while(b>=i){
+        if(tickets[i]<x){swap(tickets[i],tickets[a]);a++;i++;}
+        else if(tickets[i]>x){swap(tickets[b],tickets[i]);b--;}//注意分号啊,当大于x时b--但i不动防止漏数字；
+        else i++;
+    }
+    quicksort(l,a-1);
+    quicksort(b+1,r);
+}
+int main(){
+    int n,m;
+    cin>>n>>m;
+    for(int i=1;i<=m;i++){
+        cin>>tickets[i];
+    }
+   // int len=sizeof(tickets)/sizeof(tickets[1]);len=sizeof(tickets)/sizeof(tickets[1]) 计算的是整个数组的大小（2000001），而不是实际输入的 m 个元素
+    quicksort(1,m);
+    for(int i=1;i<=m;i++){
+        cout<<tickets[i]<<" ";
+    }
+    
+}
