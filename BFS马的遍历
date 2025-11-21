@@ -1,0 +1,40 @@
+#include<bits/stdc++.h>
+using namespace std;
+int n,m,x,y;
+struct node{
+    int x,y;
+};//注意结构体结束会有个分号啊，以及变量的作用域不一样啊
+int g[500][500];//逆天没有数据类型
+int dx[8]={-1,-2,-2,-1,1,2,2,1};
+int dy[8]={-2,-1,1,2,2,1,-1,-2};
+queue<node>q;
+void bfs(int x,int y){
+    g[x][y]=0;
+    q.push({x,y});
+    while(!q.empty()){
+        auto u=q.front(); q.pop();
+        for(int i=0;i<8;i++){
+            int a=u.x+dx[i];
+            int b=u.y+dy[i];
+            if(a<0||a>=n||b<0||b>m) continue;
+            if(g[a][b]!=-1) continue;//这里是防止走回头路，因为是最小步，所以回头路是不可能的，这里影视不等于-1，而不是等等0，因为很可能这个位置要走好几步，不是零，从而走回头路；
+            g[a][b]=g[u.x][u.y]+1;
+            q.push({a,b});
+        }
+    }
+}
+int main(){
+    cin>>n>>m;
+    memset(g,-1,sizeof g);
+    cin>>x>>y;
+    x--;y--;
+    bfs(x,y);
+    int count=0;
+    for(int i=0;i<n;i++){//这里因为上面已经平移过起始点了所以这里就从0开始遍历了
+        for(int j=0;j<m;j++){
+            if(count%3==0) cout<<endl;
+            cout<<g[i][j]<<" ";
+            count++;
+        }
+    }
+}
