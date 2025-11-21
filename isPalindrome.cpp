@@ -1,18 +1,44 @@
-#include<iostream>
-#include<vector>
+#include <iostream>
+#include <cstring>
+#include <algorithm>
+#include <queue>
 using namespace std;
-bool isPalindrome(int x){
-    int original=x,reversed=0;
-    while(original>0){
-        reversed=reversed*10+original%10;  //判断回文数，通过一位一位的数学运算实现逆转；
-        original/=10;
+
+const int N=1010;
+int n,m;
+char g[N][N];
+struct Node{int x,y;};
+int dis[N][N];
+int dx[4]={-1,0,1,0};
+int dy[4]={0,1,0,-1};
+
+void bfs(){
+  memset(dis,-1,sizeof dis);
+  queue<Node> q;
+  for(int i=0; i<n; i++)
+    for(int j=0; j<m; j++)
+      if(g[i][j] == '1')
+        dis[i][j]=0, q.push({i,j});
+  while(q.size()){
+    auto t=q.front(); q.pop();
+    for(int i=0; i < 4; i++){
+      int a=t.x+dx[i], b=t.y+dy[i];
+      if(a<0||a>=n||b<0||b>=m)continue;
+      if(dis[a][b]!=-1) continue;
+      dis[a][b]=dis[t.x][t.y]+1;
+      q.push({a,b});
     }
-    return reversed == x;
+  }
 }
 int main(){
-    int a,b,ai;
-    cin>>a>>b;
-    for(int i=a;i<=b;i++){
-        if(isPalindrome(i)) cout<<i<<endl;
-}
+  cin >> n >> m;
+  for(int i=0; i < n; i ++) 
+    scanf("%s",g[i]);
+  bfs();
+  for(int i=0; i < n; i ++){
+    for(int j=0; j < m; j ++) 
+      printf("%d ",dis[i][j]);
+    puts("");
+  }
+  return 0;
 }
