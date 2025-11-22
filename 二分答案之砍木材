@@ -1,0 +1,32 @@
+#include<bits/stdc++.h>
+using namespace std;
+long long arr[100001];//在n个原木下，要切k段的木材。求长度最长l是多少二分答案的流程单调性，数据与答案间的关系，然后最小和最大可以是多少，然后进行二分假设mid成立判断最后结果与题目要求是否一致，滞后就是二分查找的原理了。
+int main(){
+    int n;
+    long long k,ai;
+    cin>>n>>k;//注意数据类型匹配，输出函数也是；
+    for(int i=0;i<n;i++){
+       cin>>ai;
+        arr[i]=ai;
+    }
+    sort(arr,arr+n);
+    long long sum=0;//sum小心溢出，开启longlong
+    for(int i=0;i<n;i++){
+        sum+=arr[i];
+    }
+    if(sum<k) {cout<<0;return 0;}
+    int l=1,r=arr[n-1],mid,result=0;
+    while(l<=r){
+        long long count=0;
+        mid=l+(r-l)/2;
+        for(int i=0;i<n;i++){
+            count+=(arr[i]/mid);
+        }
+        if(count>=k){
+            result=mid;
+            l=mid+1;
+        }
+        else r=mid-1;
+    }
+    cout<<result;
+}

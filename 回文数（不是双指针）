@@ -31,6 +31,7 @@ void bfs(){
   }
 }
 int main(){
+<<<<<<< HEAD:isPalindrome.cpp
   cin >> n >> m;
   for(int i=0; i < n; i ++) 
     scanf("%s",g[i]);
@@ -42,3 +43,11 @@ int main(){
   }
   return 0;
 }
+=======
+    int a,b,ai;
+    cin>>a>>b;
+    for(int i=a;i<=b;i++){
+        if(isPalindrome(i)) cout<<i<<endl;
+}
+}
+>>>>>>> cbc5614b9c0fa74e221ef24c7063adc9389f58de:回文数（不是双指针）
